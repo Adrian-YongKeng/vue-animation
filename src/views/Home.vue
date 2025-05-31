@@ -1,12 +1,13 @@
 <template>
   <div class="home">
-    <Toast v-if="showToast" />
-    <Todos @badValue="triggerToast" />
-    <transition name="fade">
-      <div v-if="showP">Hello ninjas</div>
+    <transition name="toast">
+      <Toast v-if="showToast" />
+      <!-- <div v-if="showP">Hello ninjas</div> -->
     </transition>
 
-    <button @click="showP = !showP">toggle</button>
+    <Todos @badValue="triggerToast" />
+
+    <!-- <button @click="showP = !showP">toggle</button> -->
   </div>
 </template>
 
@@ -19,41 +20,71 @@ export default {
   components: { Toast, Todos },
   setup() {
     const showToast = ref(false);
-    const showP = ref(false);
+    // const showP = ref(false);
 
     const triggerToast = () => {
       showToast.value = true;
       setTimeout(() => (showToast.value = false), 3000);
     };
 
-    return { showToast, triggerToast, showP };
+    return { showToast, triggerToast };
   },
 };
 </script>
 
 <style>
-.fade-enter-from {
+/*enter class*/
+.toast-enter-from {
+  opacity: 0;
+  transform: translateY(-60px);
+}
+/* enter-to default state so no need code out  */
+.toast-enter-to {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toast-enter-active {
+  transition: all 0.3s ease;
+}
+/*leave class*/
+/* leave-from default state so no need code out  */
+.toast-leave-from {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toast-leave-to {
+  opacity: 0;
+  transform: translateY(-60px);
+}
+
+.toast-leave-active {
+  transition: all 0.3s ease;
+}
+
+/* .fade-enter-from {
   opacity: 0;
 }
 
 /* default state so no need code out  */
-.fade-enter-to {
+/* .fade-enter-to {
   opacity: 1;
-}
+} */
 
-.fade-enter-active {
+/* .fade-enter-active {
   transition: all 2s ease;
-}
-
-.fade-leave-from {
+} */
+/* default state so no need code out  */
+/* .fade-leave-from {
   opacity: 1;
-}
+} */
 
-.fade-leave-to {
+/* .fade-leave-to {
   opacity: 0;
-}
+} */
 
-.fade-leave-active {
+/* .fade-leave-active {
   transition: all 2s ease;
-}
+} */
 </style>
